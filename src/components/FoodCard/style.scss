@@ -1,0 +1,309 @@
+@use "sass:math";
+@import "~Styles/variables";
+
+@mixin corner-gradient($gradient-color) {
+  background: linear-gradient(
+      to right bottom,
+      transparent 44%,
+      $gradient-color 44%,
+      $gradient-color 51%,
+      transparent 51%,
+      transparent 100%
+  );
+}
+
+.food {
+  $main-text-color: #000000;
+  $secondary-text-color: #666666;
+
+  $base-color: #1698D9;
+  $base-hover-color: #2EA8E6;
+  $selected-color: #D91667;
+  $selected-hover-color: #E52E7A;
+  $disabled-color: #B3B3B3;
+  $disabled-bottom-text-color: #FFFF66;
+  $background-color: #ffffff;
+
+  $width: 320px;
+  $size-ratio: 1.5;
+
+  $border-width: 4px;
+  $border-radius: 12px;
+  $border-clip-width: 12.5%;
+  $border-clip-height: math.div($border-clip-width, $size-ratio);
+
+  $corner-size: 44px;
+  $corner-padding: 47px;
+
+  width: $width;
+  min-width: $width;
+  margin: 0 40px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    width: 100%;
+    height: #{$width * $size-ratio};
+    cursor: pointer;
+  }
+
+  &__top {
+    position: relative;
+    width: calc(100% - #{$corner-size});
+    height: $corner-size;
+    padding: 17px 12px 0 #{$border-width + $corner-padding - $corner-size};
+    border-top: $border-width solid $base-color;
+    border-right: $border-width solid $base-color;
+    border-top-right-radius: $border-radius;
+    background: $background-color;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      right: calc(100% - #{$border-width});
+      top: -$border-width;
+      width: #{$corner-size + $border-width};
+      height: #{$corner-size + $border-width};
+      @include corner-gradient($base-color);
+      z-index: 2;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      right: 100%;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-left: #{$corner-size - $border-width} solid transparent;
+      border-bottom: #{$corner-size - $border-width} solid $background-color;
+      border-right: 0 solid transparent;
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    padding: 0 12px 0 $corner-padding;
+    border: $border-width solid $base-color;
+    border-top: none;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    background: $background-color;
+    overflow: hidden;
+  }
+
+  &__slogan {
+    color: $secondary-text-color;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  &__name,
+  &__filling {
+    color: $main-text-color;
+    font-size: 48px;
+  }
+
+  &__name {
+    position: relative;
+    left: -3px;
+    font-size: 48px;
+  }
+
+  &__filling {
+    font-size: 24px;
+  }
+
+  &__contents-list {
+    margin-top: 15px;
+    color: $secondary-text-color;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__contents-item {
+    list-style: none;
+  }
+
+  &__image {
+    position: absolute;
+    left: -28px;
+    top: 164px;
+    width: 368px;
+    height: 360px;
+  }
+
+  &__weight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 80px;
+    height: 80px;
+    padding-top: 20px;
+    border-radius: 50%;
+    background: $base-color;
+    color: #fff;
+
+    &-value {
+      margin-bottom: 8px;
+      font-size: 42px;
+      line-height: 22px;
+    }
+
+    &-unit {
+      font-size: 22px;
+      line-height: 22px;
+    }
+  }
+
+  &__footer {
+    margin-top: 14px;
+    font-size: 13px;
+    text-align: center;
+
+    &-text {
+      color: #fff;
+    }
+
+    &-button {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: none;
+      color: $base-color;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 15px;
+      cursor: pointer;
+
+      span {
+        display: inline-block;
+        position: relative;
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: -1px;
+          width: 100%;
+          height: 100%;
+          border-bottom: 1px dashed $base-color;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        color: $base-hover-color;
+
+        span:before {
+          border-bottom-color: $base-hover-color;
+        }
+      }
+    }
+  }
+
+  &_hovered &__top {
+    border-color: $base-hover-color;
+
+    &:before {
+      @include corner-gradient($base-hover-color);
+    }
+  }
+
+  &_hovered &__content {
+    border-color: $base-hover-color;
+  }
+
+  &_hovered &__weight {
+    background: $base-hover-color;
+  }
+
+  &_selected &__top {
+    border-color: $selected-color;
+
+    &:before {
+      @include corner-gradient($selected-color);
+    }
+  }
+
+  &_selected &__content {
+    border-color: $selected-color;
+  }
+
+  &_selected &__weight {
+    background: $selected-color;
+  }
+
+  &_hovered#{&}_selected &__top {
+    border-color: $selected-hover-color;
+
+    &:before {
+      @include corner-gradient($selected-hover-color);
+    }
+  }
+
+  &_hovered#{&}_selected &__content {
+    border-color: $selected-hover-color;
+  }
+
+  &_hovered#{&}_selected &__slogan {
+    color: $selected-hover-color;
+  }
+
+  &_hovered#{&}_selected &__weight {
+    background: $selected-hover-color;
+  }
+
+  &_disabled &__wrapper {
+    cursor: default;
+  }
+
+  &_disabled &__top {
+    border-color: $disabled-color;
+
+    &:before {
+      @include corner-gradient($disabled-color);
+    }
+
+    & > * {
+      color: $disabled-color;
+      opacity: 0.5;
+    }
+  }
+
+  &_disabled &__content {
+    border-color: $disabled-color;
+
+    & > * {
+      color: $disabled-color;
+      opacity: 0.5;
+    }
+  }
+
+  &_disabled &__weight {
+    background: $disabled-color;
+    color: #ffffff;
+    opacity: 1;
+  }
+
+  &_disabled &__footer-text {
+    color: $disabled-bottom-text-color;
+  }
+
+  @media screen and (max-width: $screen-tablet) {
+    margin: 0 20px 20px 20px;
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    margin: 0 10px 20px;
+  }
+}

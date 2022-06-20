@@ -1,0 +1,64 @@
+@import 'variables';
+
+$default-font-family: "Trebuchet MS", Arial, Verdana, Helvetica, sans-serif;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  font-family: $default-font-family;
+  font-size: 12px;
+  background: #000 url("../assets/images/pattern.png");
+  background-size: 70px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1280px;
+  min-height: 100vh;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+.food-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 40px;
+
+  @media screen and (max-width: $screen-tablet) {
+    padding: 0 20px;
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    padding: 0;
+  }
+}
+
+.main-header {
+  margin-bottom: 24px;
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 100;
+  font-family: "Exo 2", $default-font-family;
+  color: #fff;
+  text-align: center;
+}
