@@ -14,7 +14,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: './',
+    publicPath: '',
     filename: 'build/project.js',
   },
   module: {
@@ -40,8 +40,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'build/[name].css',
-      chunkFilename: 'build/[id].css',
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
     new HTMLWebpackPlugin({
       filename: 'index.html',
